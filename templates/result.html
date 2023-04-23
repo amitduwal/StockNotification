@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Stock Price Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css') }}">
+  </head>
+  <body>
+    <h2>Stock Price Notification System</h2>
+    <div class="results">
+      <h3>Stock: {{stock_symbol}}</h3>
+      <h3>Price: <span id="stock-price">{{ price }}</span></h3>
+      <p>Last Updated: <span id="last-updated">{{current_time}}</span></p>
+      <h4>Frequency: <span id="frequency" data-frequency="{{ frequency }}">{{ frequency }} seconds</span></h4>
+      <h4>Threshold: <span id="threshold" price-threshold="{{ price_threshold }}">{{ price_threshold }}</span></h4>
+      <h4>Notification Type: <span id="notification" notification-type="{{ notification_type }}">{{ notification_type }}</span></h4>
+      <h4>Email: <span id="email" email="{{ email_address }}">{{ email_address }}</span></h4>
+      <h4>Contact: <span id="contact" contact="{{ contact_number }}">{{ contact_number }}</span></h4>
+      <div id="price-alert"></div>
+    </div>
+    
+    <div id="price-alert"></div>
+<script>
+var price_interval;
+function updateStockPrice() {
+  var xhr = new XMLHttpRequest();
+  if (!updateStockPrice.start_time) {
+    updateStockPrice.start_time = Date.now();
+  }
+  var elapsed_time = Date.now() - updateStockPrice.start_time;
+  if (elapsed_time >= 36000000) {  // Stop after 10 hour
+    clearInterval(price_interval);
+    document.getElementById("stock-price").innerHTML = "Timeout: Price update stopped after 10 hour";
+    return;
+  }
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      var price = parseFloat(xhr.responseText);
+      var threshold = parseFloat(document.getElementById("threshold").getAttribute("price-threshold"));
+      
+      // document.getElementById("stock-price").innerHTML = price.toFixed(2);
+      price = price.toFixed(2);
+      var priceEl = document.getElementById("stock-price");
+      var lastPrice = parseFloat(priceEl.textContent);
+      if (price > lastPrice) {
+        priceEl.style.color = "#00FF00"; // green
+        // priceEl.textContent += ' ▲';
+        priceEl.innerHTML = price + ' <span style="color: #00FF00">&#9650;</span>'; // up arrow
+      } else if (price < lastPrice) {
+        priceEl.style.color = "#FF0000"; // red
+        // priceEl.textContent += ' ▼';
+        priceEl.innerHTML = price + ' <span style="color: #FF0000">&#9660;</span>'; // down arrow
+
+
+      }
+      // Apply a CSS transform to animate the price change
+      priceEl.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        priceEl.style.transform = 'scale(1)';
+      }, 500);
+      
+      // priceEl.innerHTML = price;
+      
+      document.getElementById("last-updated").innerHTML = new Date().toLocaleTimeString();
+      var current_time = new Date().toLocaleTimeString();
+      
+
+
+      if (price >= threshold) {
+        var notification_type = document.getElementById("notification").getAttribute("notification-type")
+        if (notification_type == "email"){
+
+          var email_address = document.getElementById("email").getAttribute("email")
+          var subject = "Price Alert: " + "{{ stock_symbol }}";
+          var body = "The price of " + "{{ stock_symbol }}" + " has exceeded " + threshold.toFixed(2) + " at " + current_time;
+          var xhr_mail = new XMLHttpRequest();
+          xhr_mail.open("POST", "/send_email", true);
+          xhr_mail.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+          xhr_mail.send("subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body)+ "&email_address=" + encodeURIComponent(email_address));
+          clearInterval(price_interval);
+          document.getElementById("price-alert").innerHTML = "Price alert: " + body + "<br><br><button onclick='history.back()'>Go back</button>";
+        }
+        else if (notification_type == "text") {
+        var message_body = "Price Alert: " + "{{ stock_symbol }}" + " has exceeded " + threshold.toFixed(2) + " at " + current_time;
+          var xhr_message = new XMLHttpRequest();
+          var contact_number = document.getElementById("contact").getAttribute("contact") 
+
+          xhr_message.open("POST", "/send_message", true);
+          xhr_message.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr_message.send("body=" + encodeURIComponent(message_body)+ "&contact_number=" + encodeURIComponent(contact_number));
+
+          clearInterval(price_interval);
+          document.getElementById("price-alert").innerHTML =  message_body+ "<br><br><button onclick='history.back()'>Go back</button>";
+        } else {
+          console.error("Invalid alert type: " + alert_type);
+        }
+
+      }
+    }
+  };
+  xhr.open("GET", "/get_price?symbol=" + "{{ stock_symbol }}", true);
+  xhr.send();
+}
+var frequencyElement = document.getElementById("frequency");
+var frequency = frequencyElement.getAttribute("data-frequency");
+
+price_interval = setInterval(updateStockPrice, frequency*1000); // Update every f seconds
+</script>
+  </body>
+</html>

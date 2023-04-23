@@ -1,0 +1,90 @@
+body{
+    font-family: 'Poppins',sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: black;
+    margin: 0;
+    background-color: #c3c8ca;
+}
+h2{
+    padding-top: 30px;
+    font-size: 31px;
+}
+/* media query for smaller screens */
+@media (max-width: 768px) {
+    h2 {
+      font-size: 20px;
+    }
+    form{
+        font-size: 14px;
+    }
+  }
+h2, p {
+    margin: 1em auto;
+    text-align: center;
+}
+
+.contact-input {
+    margin-top: 0;
+    padding-top: 0;
+    display: inline-block;
+    vertical-align: middle;
+    width: 200px;
+}
+  
+
+fieldset p{
+    text-align: left;
+}
+
+form {
+    width: 60vw;
+    max-width: 600px;
+    min-width: 300px;
+    margin: 0 auto;
+    padding-bottom: 2em;
+    background-color: #e7eae9;
+    padding: 4%;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+
+label {
+    display: block;
+    margin: 0.5rem 0;
+}
+
+input,
+textarea,
+select {
+  margin: 1px 0 0 0;
+  width: 100%;
+  min-height: 2em;
+}
+
+div{
+    margin-top: 20px;
+}
+
+
+
+.inline {
+    width: unset;
+    margin: 0 0.5em 0 0;
+    vertical-align: middle;
+}
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    
+    margin: 1em auto;
+    height: 2.5em;
+    font-size: 1.2rem;
+    color: white;
+    background-color: rgb(173, 185, 173);
+    border: none;
+    min-width: 300px;
+  }

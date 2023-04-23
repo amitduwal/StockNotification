@@ -1,0 +1,51 @@
+body{
+    font-family: 'Poppins',sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: black;
+    margin: 0;
+    background-color: #c3c8ca;
+}
+h2{
+    padding-top: 30px;
+    font-size: 31px;
+    margin: 1em auto;
+    text-align: center;
+}
+/* media query for smaller screens */
+@media (max-width: 768px) {
+    h2 {
+      font-size: 20px;
+    }
+    results{
+        font-size: 14px;
+    }
+  }
+.results{
+    width: 60vw;
+    max-width: 600px;
+    min-width: 300px;
+    margin: 0 auto;
+    padding-bottom: 2em;
+    background-color: #e7eae9;
+    padding: 4%;
+    border-radius: 5px;
+    font-size: 16px;
+}
+h3{
+    margin-top: 8px;
+    margin-bottom: 5px;
+    padding: 0;
+}
+h4{
+    padding-top: 5px;
+    margin: 0;
+    color: #6d7270;
+}
+p{
+    font-weight: 500;
+}
+#price-alert{
+    margin-top: 15px;
+    color: rgb(234, 81, 81);
+}

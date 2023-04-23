@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stock Price Notification System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Add any additional CSS stylesheets or scripts here -->
+  </head>
+  <body>
+    
+    <main>
+      
+      <h2>Stock Price Notification System</h2>
+
+      <form action="/result" method="post">
+        <div>
+          <label for="stock_symbol">Stock Symbol:</label>
+          <input type="text" id="stock_symbol" name="stock_symbol" placeholder="Enter Stock symbol (Ticker) eg. AAPL" required>
+        </div>
+        <div>
+          <label for="price_threshold">Price Threshold:</label>
+          <input type="number" id="price_threshold" name="price_threshold" placeholder="Enter the price threshold for notification eg.170" required>
+        </div>
+        <div>
+          <label for="frequency">Frequency:</label>
+          <select id="frequency" name="frequency" required>
+            <option value="">--Select the timing of price checks--</option>
+            <option value="10">10 Sec</option>
+            <option value="30">30 Sec</option>
+            <option value="60">60 Sec</option>
+            <option value="600">10 Min</option>
+            <option value="3600">1 hour</option>
+          </select>
+        </div>
+        <div>
+          <label for="notification_type">Notification Type:</label>
+          <select id="notification_type" name="notification_type" required>
+            <option value="">--Select way to provide you with notification--</option>
+            <option value="email">Email</option>
+            <option value="text">Text Message</option>
+          </select>
+        </div>
+        <div>
+          <label for="contact-number">Contact Number:</label>
+          
+            <select name="country-code" id="country-code" class="contact-input" required>
+              <option value="+1">+1 (USA)</option>
+              <option value="+44">+44 (UK)</option>
+              <option value="+91">+91 (India)</option>
+              <option value="+977">+977 (Nepal)</option>
+              <!-- add more country codes as needed -->
+            </select>
+            <input type="tel" id="contact-number" name="contact-number" class="contact-input" placeholder="Enter your contact number..." required>
+          
+          
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email address..." required>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </main>
+    <footer>
+      <!-- Add any additional footer content here -->
+    </footer>
+    <!-- Add any additional scripts here -->
+  </body>
+</html>
