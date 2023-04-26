@@ -62,4 +62,4 @@ python app.py
 •	You will receive notifications when the stock price of the company you are tracking exceeds the threshold you set.
 
 
-
+https://clipchamp.com/watch/njBSbjR36iC
